@@ -38,7 +38,7 @@ defaults:
     xla_dump: False
 
   run:
-    script: train
+    script: eval_only
     steps: 1e10
     duration: 0
     num_envs: 16
