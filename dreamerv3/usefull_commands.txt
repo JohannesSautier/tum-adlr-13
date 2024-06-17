@@ -1,0 +1,1 @@
+conda create -n "ADLR" python=3.11
