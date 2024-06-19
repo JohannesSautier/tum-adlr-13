@@ -35,7 +35,7 @@ class DMC(embodied.Env):
         env = getattr(basic_rodent_2020, task)()
       else:
         from dm_control import suite
-        env = suite.load(domain, task)
+        env = suite.load(domain, task, visualize_reward=True)
     self._dmenv = env
     from . import from_dm
     self._env = from_dm.FromDM(self._dmenv)
@@ -66,16 +66,17 @@ class DMC(embodied.Env):
 
 
     #Store videos of agent moving in the environment if eval_only is taking place 
-    image_data = self._dmenv.physics.render(height=480, width=480, camera_id="back")
+    image_data = self._dmenv.physics.render(height=480, width=480, camera_id="side")
     img=Image.fromarray(image_data, 'RGB')
     #Save always a new picture when called incraese a number in the capture 
     global frame_counter
     if 'frame_counter' not in globals():
       frame_counter = 1
 
-    filename = f"logir_new_model/frames/frame-{frame_counter}.png"
-    img.save(filename)
-    frame_counter += 1 
+    if frame_counter < 500:
+      filename = f"logir_new_model/frames/frame-{frame_counter}.png"
+      img.save(filename)
+      frame_counter += 1 
 
 
     for key, space in self.obs_space.items():
