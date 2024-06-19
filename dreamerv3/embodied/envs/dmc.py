@@ -44,6 +44,7 @@ class DMC(embodied.Env):
     self._size = size
     self._image = image
     self._camera = camera
+    
 
   @functools.cached_property
   def obs_space(self):
