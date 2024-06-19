@@ -61,8 +61,32 @@ python dreamerv3/main.py --logdir ~/logdir/{timestamp} --configs dmc_proprio --r
 What works: 
 --logdir ~/logdir_train_eval/{timestamp} --configs dmc_proprio --run.script train_eval --jax.platform cpu --batch_size 1
 
-Try the crafter game with hopefully video output: 
+Try the crafter game with hopefully video output -> Puts out Video: 
 --logdir ~/logdir_train_eval/{timestamp} --configs crafter --run.script train_eval --jax.platform cpu --batch_size 1
+
+Now we try to use the DM_control with Video input into the agent: 
+--logdir ~/logdir_train_eval/{timestamp} --configs dmc_vision --run.script train_eval --jax.platform cpu --batch_size 1
+
+
+
+
+
+
+Do a training with the dm proprio and the walker, set a small batchsize and train only a very bad model on it to get some logdir results.
+
+    python dreamerv3/main.py --logdir ~/logir_new_model/{timestamp} --configs dmc_proprio --run.train_ratio 32 --jax.platform cpu --batch_size 1 --run.steps 1000 --run.script train
+
+Launch tensorboard with the new model:
+
+    tensorboard ~/logir_new_model/20240619T114045 --configs dmc_proprio --run.script eval_only
+
+Do a evaluation with the new model:
+
+python tum-adlr-13/dreamerv3/dreamerv3/main.py --logdir ~/logir_new_model/{timestamp} --run.script eval_only --run.from_checkpoint ~/logir_new_model/20240619T114522/checkpoint.ckpt --jax.platform cpu --batch_size 1 --run.steps 1000
+
+
+
+
 
 
 
