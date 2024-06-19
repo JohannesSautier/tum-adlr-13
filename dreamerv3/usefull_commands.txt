@@ -47,14 +47,7 @@ To use the debug use
 
 Evaluate this model: 
 
-    python tum-adlr-13/dreamerv3/dreamerv3/main.py \
-    --logdir ~/logir_new_model/{timestamp} \
-    --configs dmc_proprio debug \
-    --batch_size 1 \
-    --run.steps 3000 \
-    --run.from_checkpoint \
-    ~/logir_new_model/20240619T134233/checkpoint.ckpt \
-    --run.script eval_only
+    python tum-adlr-13/dreamerv3/dreamerv3/main.py --logdir ~/logir_new_model/{timestamp} --configs dmc_proprio debug --batch_size 1 --run.steps 3000 --run.from_checkpoint ~/logir_new_model/20240619T134233/checkpoint.ckpt --run.script eval_only
 
 Launch the tensorboard: 
 

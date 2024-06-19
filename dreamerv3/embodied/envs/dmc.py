@@ -3,6 +3,7 @@ import os
 
 import embodied
 import numpy as np
+from PIL import Image
 
 
 class DMC(embodied.Env):
@@ -62,6 +63,14 @@ class DMC(embodied.Env):
     obs = self._env.step(action)
     key = 'image' if self._image else 'log_image'
     obs[key] = self._dmenv.physics.render(*self._size, camera_id=self._camera)
+
+
+    #Store videos of agent moving in the environment if eval_only is taking place 
+    image_data = self._dmenv.physics.render(height=480, width=480, camera_id="back")
+    img=Image.fromarray(image_data, 'RGB')
+    img.save("logir_new_model/frames/frame-1.png")
+
+
     for key, space in self.obs_space.items():
       if np.issubdtype(space.dtype, np.floating):
         assert np.isfinite(obs[key]).all(), (key, obs[key])
