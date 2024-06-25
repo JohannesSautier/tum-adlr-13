@@ -11,10 +11,10 @@ import subprocess
 subprocess.call([
     'ffmpeg',
     '-framerate', '50',
-    '-i', 'logir_new_model/frames/frame-%d.png',
-    '-vf', 'select=not(mod(n\,4))',  # Use only every 12th frame
+    '-i', 'logdir2/frames/frame-%d.png',
+    '-vf', 'select=not(mod(n\,2))',  # Use only every 12th frame
     '-vsync', 'vfr',  # Variable Frame Rate (VFR) to keep the selected frames' timestamps
     '-c:v', 'libx264',
     '-pix_fmt', 'yuv420p',
-    'logir_new_model/frames/video.mp4'
+    'logdir2/frames/video.mp4'
 ])

@@ -74,8 +74,8 @@ class DMC(embodied.Env):
     if 'frame_counter' not in globals():
       frame_counter = 1
 
-    if frame_counter < 500:
-      filename = f"logir_new_model/frames/frame-{frame_counter}.png"
+    if frame_counter < 10000:
+      filename = f"logdir2/frames/frame-{frame_counter}.png"
       img.save(filename)
       frame_counter += 1 
 
