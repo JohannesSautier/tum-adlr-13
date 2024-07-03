@@ -66,18 +66,18 @@ class DMC(embodied.Env):
     obs[key] = self._dmenv.physics.render(*self._size, camera_id=self._camera)
 
 
-    # #Store videos of agent moving in the environment if eval_only is taking place 
-    # image_data = self._dmenv.physics.render(height=480, width=480, camera_id="side")
-    # img=Image.fromarray(image_data, 'RGB')
-    # #Save always a new picture when called incraese a number in the capture 
-    # global frame_counter
-    # if 'frame_counter' not in globals():
-    #   frame_counter = 1
+    #Store videos of agent moving in the environment if eval_only is taking place 
+    image_data = self._dmenv.physics.render(height=480, width=480, camera_id="side")
+    img=Image.fromarray(image_data, 'RGB')
+    #Save always a new picture when called incraese a number in the capture 
+    global frame_counter
+    if 'frame_counter' not in globals():
+      frame_counter = 1
 
-    # if frame_counter < 10000:
-    #   filename = f"logdir/frames/frame-{frame_counter}.png"
-    #   img.save(filename)
-    #   frame_counter += 1 
+    if frame_counter < 10000:
+      filename = f"logdir/frames/frame-{frame_counter}.png"
+      img.save(filename)
+      frame_counter += 1 
 
 
     for key, space in self.obs_space.items():
