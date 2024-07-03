@@ -58,8 +58,10 @@ Launch the tensorboard:
     tensorboard --logdir logir_new_model/20240619T134632
 
 
+# ---------------------------------------------------------------------------- #
 #                       Run a walker walk training script                      #
 # ---------------------------------------------------------------------------- #
+
 Run this model: 
     python tum-adlr-13/dreamerv3/dreamerv3/main.py --logdir ~/tum-adlr-13/Logs/logdir1/{timestamp} --configs dmc_proprio --run.script train --seed 3 
 
