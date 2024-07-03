@@ -59,6 +59,7 @@ Launch the tensorboard:
 
 
 # ---------------------------------------------------------------------------- #
+<<<<<<< HEAD
 #                       Run a walker walk training script                      #
 # ---------------------------------------------------------------------------- #
 Run this model: 
@@ -74,3 +75,21 @@ Load the tensorboard event file:
     tensorboard --logdir ~/logdir/20240702T201609
 
 Run the video maker: python tum-adlr-13/dreamerv3/make_video.py
+=======
+#                       Things to try out from the issues                      #
+# ---------------------------------------------------------------------------- #
+
+
+Reproducing results: 
+-If you use more than 1 env instance they need to have the same enivonrment seed to produce a similar result 
+-Experimentes were run 3 seeds per task and then the mean and std were calculated
+-For my walker walk change the train_ratio to get the correct result 
+
+
+
+ Running policy locally: 
+ 1. Train an agent normally 
+  python dreamerv3/train.py --run.logdir ~/logdir/train --configs crafter --run.script train
+ 2. Minimal example to load the agent by myselfe. Look into eval_only.py to see implementation 
+ 
+>>>>>>> f6028f35995e04a672579e973a24fb27f3ef404f
