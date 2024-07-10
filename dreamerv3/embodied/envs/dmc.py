@@ -61,23 +61,26 @@ class DMC(embodied.Env):
     for key, space in self.act_space.items():
       if not space.discrete:
         assert np.isfinite(action[key]).all(), (key, action[key])
+    self._dmenv.physics.model.geom_friction[:,0]=np.clip(np.random.normal(0.7,0.4),0.05,1.0)
+    self._dmenv.physics.model.geom_friction[:,1]= np.clip(np.random.normal(0.1,0.4),0.05,1.0)
+    self._dmenv.physics.model.geom_friction[:,2]= np.clip(np.random.normal(0.1,0.4),0.05,1.0)
     obs = self._env.step(action)
     key = 'image' if self._image else 'log_image'
     obs[key] = self._dmenv.physics.render(*self._size, camera_id=self._camera)
 
 
-    #Store videos of agent moving in the environment if eval_only is taking place 
-    image_data = self._dmenv.physics.render(height=480, width=480, camera_id="side")
-    img=Image.fromarray(image_data, 'RGB')
-    #Save always a new picture when called incraese a number in the capture 
-    global frame_counter
-    if 'frame_counter' not in globals():
-      frame_counter = 1
+    # #Store videos of agent moving in the environment if eval_only is taking place 
+    # image_data = self._dmenv.physics.render(height=480, width=480, camera_id="side")
+    # img=Image.fromarray(image_data, 'RGB')
+    # #Save always a new picture when called incraese a number in the capture 
+    # global frame_counter
+    # if 'frame_counter' not in globals():
+    #   frame_counter = 1
 
-    if frame_counter < 10000:
-      filename = f"logdir/frames/frame-{frame_counter}.png"
-      img.save(filename)
-      frame_counter += 1 
+    # if frame_counter < 10000:
+    #   filename = f"logdir_debug/frames/frame-{frame_counter}.png"
+    #   img.save(filename)
+    #   frame_counter += 1 
 
 
     for key, space in self.obs_space.items():
