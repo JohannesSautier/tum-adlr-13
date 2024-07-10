@@ -5,6 +5,14 @@
 # ------------------------ Connnect to cloud instance: ----------------------- #
 gcloud compute config-ssh
 
+# ------------------------------ Download Driver ----------------------------- #
+https://github.com/GoogleCloudPlatform/compute-gpu-installation/releases
+Choose latest version of pyz file her and download it:
+curl -fSsL -O https://github.co........
+run the skript: 
+sudo python3 cuda_installer.pyz install_cuda
+VM reboots then run skript again 
+VM reboots again but then everything is installed 
 
 # ---------------------------- Install Miniconda: ---------------------------- #
 mkdir -p ~/miniconda3
@@ -39,6 +47,9 @@ pip install -U -r tum-adlr-13/dreamerv3/dreamerv3/requirements.txt \
 -> Incase there appears a Tensorflow waring try to install pip install ml-dtypes==0.3.1 and then the requirments.txt files again
 -> Does not really work beacause then Jax is not uptodate
 
+# -------------------------- set up git credentials -------------------------- #
+git config --global user.name "Your Name"
+git config --global user.email "youremail@example.com"
 
 
 # ---------------------------------------------------------------------------- #
