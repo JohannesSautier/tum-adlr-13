@@ -45,10 +45,10 @@ pip install -U -r tum-adlr-13/dreamerv3/dreamerv3/requirements.txt \
 #                               Run in debug mode                              #
 # ---------------------------------------------------------------------------- #
 
-    python tum-adlr-13/dreamerv3/dreamerv3/main.py --logdir ~/logdir_debug/{timestamp} --configs dmc_proprio debug --batch_size 1 --run.steps 3000 
+    python dreamerv3/dreamerv3/main.py --logdir ~/logdir_debug/{timestamp} --configs dmc_proprio debug --batch_size 1 --run.steps 3000 
 
 Evaluate this model: 
-    python tum-adlr-13/dreamerv3/dreamerv3/main.py --logdir ~/logdir_debug/{timestamp} --configs dmc_proprio debug --batch_size 1 --run.from_checkpoint ~/logdir_debug/20240703T093224/checkpoint.ckpt --run.script eval_only --run.steps 200
+    python dreamerv3/dreamerv3/main.py --logdir ~/logdir_debug/{timestamp} --configs dmc_proprio debug --batch_size 1 --run.from_checkpoint ~/logdir_debug/20240703T093224/checkpoint.ckpt --run.script eval_only --run.steps 200
 
 Launch the tensorboard: 
     tensorboard --logdir logir_new_model/20240619T134632
