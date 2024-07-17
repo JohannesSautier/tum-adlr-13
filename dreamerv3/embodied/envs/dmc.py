@@ -61,9 +61,9 @@ class DMC(embodied.Env):
     for key, space in self.act_space.items():
       if not space.discrete:
         assert np.isfinite(action[key]).all(), (key, action[key])
-    self._dmenv.physics.model.geom_friction[:,0]=np.clip(np.random.normal(0.7,0.4),0.05,1.0)
-    self._dmenv.physics.model.geom_friction[:,1]= np.clip(np.random.normal(0.1,0.4),0.05,1.0)
-    self._dmenv.physics.model.geom_friction[:,2]= np.clip(np.random.normal(0.1,0.4),0.05,1.0)
+    # self._dmenv.physics.model.geom_friction[:,0]=np.clip(np.random.normal(0.7,0.4),0.05,1.0)
+    # self._dmenv.physics.model.geom_friction[:,1]= np.clip(np.random.normal(0.1,0.4),0.05,1.0)
+    # self._dmenv.physics.model.geom_friction[:,2]= np.clip(np.random.normal(0.1,0.4),0.05,1.0)
     obs = self._env.step(action)
     key = 'image' if self._image else 'log_image'
     obs[key] = self._dmenv.physics.render(*self._size, camera_id=self._camera)

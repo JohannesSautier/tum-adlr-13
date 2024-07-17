@@ -70,10 +70,10 @@ Launch the tensorboard:
 # ---------------------------------------------------------------------------- #
 
 Run this model: 
-    python tum-adlr-13/dreamerv3/dreamerv3/main.py --logdir ~/tum-adlr-13/Logs/logdir1/{timestamp} --configs dmc_proprio --run.script train --seed 3 
+    python tum-adlr-13/dreamerv3/dreamerv3/main.py --logdir ~/logdir/{timestamp} --configs dmc_proprio --run.script train --seed 3 
 
 Evaluate this model: 
-    python tum-adlr-13/dreamerv3/dreamerv3/main.py --logdir ~/logdir/{timestamp} --configs dmc_proprio --run.script eval_only --run.from_checkpoint ~/logdir/20240628T155338/checkpoint.ckpt --run.num_envs 1 --run.num_envs_eval 1 --run.steps 500
+    python tum-adlr-13/dreamerv3/dreamerv3/main.py --logdir ~/logdir/{timestamp} --configs dmc_proprio --run.script eval_only --run.from_checkpoint ~/logdir/20240628T155338/checkpoint.ckpt --run.num_envs 1 --run.num_envs_eval 1 --run.steps 1000
 
 Evaluate this model completly: 
     python tum-adlr-13/dreamerv3/dreamerv3/main.py --logdir ~/logdir/{timestamp} --configs dmc_proprio --run.script eval_only --run.from_checkpoint ~/logdir/20240628T155338/checkpoint.ckpt 
