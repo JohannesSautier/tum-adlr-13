@@ -7,6 +7,9 @@ from tensorflow_probability.substrates import jax as tfp
 from . import jaxutils
 from . import ninjax as nj
 
+#Import the callback function!
+from embodied.run.train import callback
+
 f32 = jnp.float32
 tfd = tfp.distributions
 sg = lambda x: jax.tree_util.tree_map(jax.lax.stop_gradient, x)
@@ -86,6 +89,16 @@ class RSSM(nj.Module):
           cast(carry), cast(action), self.unroll, axis=1)
     deter, feat = self._gru(carry['deter'], carry['stoch'], action)
     logit = self._prior(feat)
+
+    #Callculate the softmax for each row 
+    intermediate = jax.nn.softmax(logit, axis=-1)
+    #Summ up the result
+    entropy_all = -jnp.sum(intermediate * jnp.log(intermediate), axis=-1) 
+    #Take the overall entropy over one imagination step for 44 different starting values 
+    average_entropy = jnp.mean(entropy_all)
+    #Use the callback function 
+    jax.debug.callback(callback, average_entropy)
+
     stoch = cast(self._dist(logit).sample(seed=nj.seed()))
     carry = dict(deter=deter, stoch=stoch)
     outs = dict(deter=deter, stoch=stoch, logit=logit)

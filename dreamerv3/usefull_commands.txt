@@ -56,7 +56,7 @@ git config --global user.email "youremail@example.com"
 #                               Run in debug mode                              #
 # ---------------------------------------------------------------------------- #
 
-    python dreamerv3/dreamerv3/main.py --logdir ~/logdir_debug/{timestamp} --configs dmc_proprio debug --run.steps 3000 
+    python tum-adlr-13/dreamerv3/dreamerv3/main.py --logdir ~/logdir_debug/{timestamp} --configs dmc_proprio debug --run.steps 100
 
 Evaluate this model: 
     python dreamerv3/dreamerv3/main.py --logdir ~/logdir_debug/{timestamp} --configs dmc_proprio debug --batch_size 1 --run.from_checkpoint ~/logdir_debug/20240703T093224/checkpoint.ckpt --run.script eval_only --run.steps 200

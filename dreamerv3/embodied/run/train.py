@@ -5,6 +5,14 @@ from functools import partial as bind
 import embodied
 import numpy as np
 
+#Make the nececarry imports for plotting + global storage varibale to store the results of the latent 
+import matplotlib.pyplot as plt
+entropy_values = []
+
+def callback(entropy):
+  # This logs the entropy of the latent that is used for imagining the next state to create trajectories for the agent to learn on 
+  entropy_values.append(entropy)
+
 
 def train(make_agent, make_replay, make_env, make_logger, args):
 
@@ -125,4 +133,12 @@ def train(make_agent, make_replay, make_env, make_logger, args):
     if should_save(step):
       checkpoint.save()
 
+  #Convert entropy array 
+  entropy_values_converted = [float(value.item()) for value in entropy_values]
+  #Plot the result 
+  plt.plot(entropy_values_converted)
+  plt.title('Entropy over Time')
+  plt.xlabel('Step')
+  plt.ylabel('Entropy')
+  plt.savefig('logdir_debug/graphs/entropy_over_time.png')
   logger.close()

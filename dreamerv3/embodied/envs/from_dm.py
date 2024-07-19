@@ -52,6 +52,7 @@ class FromDM(embodied.Env):
     reset = action.pop('reset')
     if reset or self._done:
       time_step = self._env.reset()
+      # Randomize friction for this newly started episode.
       self._env.physics.model.geom_friction[:,0]=np.clip(np.random.normal(0.7,1),0.05,3.0)
       self._env.physics.model.geom_friction[:,1]= np.clip(np.random.normal(0.1,1),0.05,3.0)
       self._env.physics.model.geom_friction[:,2]= np.clip(np.random.normal(0.1,1),0.05,3.0)
