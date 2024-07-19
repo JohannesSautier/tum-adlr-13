@@ -8,10 +8,15 @@ import numpy as np
 #Make the nececarry imports for plotting + global storage varibale to store the results of the latent 
 import matplotlib.pyplot as plt
 entropy_values = []
+counter = 0
 
 def callback(entropy):
   # This logs the entropy of the latent that is used for imagining the next state to create trajectories for the agent to learn on 
-  entropy_values.append(entropy)
+  global counter 
+  counter +=1
+  if (counter%1000)==0: 
+    entropy_values.append(entropy)
+    print (entropy)
 
 
 def train(make_agent, make_replay, make_env, make_logger, args):
