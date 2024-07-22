@@ -29,6 +29,7 @@ class Driver:
     self.callbacks = []
     self.acts = None
     self.carry = None
+    self.offset_callibration= []
     self.reset()
 
   def reset(self, init_policy=None):
@@ -64,6 +65,27 @@ class Driver:
       obs = [env.step(act) for env, act in zip(self.envs, acts)]
     obs = {k: np.stack([x[k] for x in obs]) for k in obs[0].keys()}
     assert all(len(x) == self.length for x in obs.values()), obs
+
+    #Check 
+
+
+
+
+    if len(self.offset_callibration) == 0:
+      self.offset_callibration = [[] for _ in range(len(acts))]
+
+    for i in range(len(acts)): 
+      if acts[i]['reset']:
+            self.offset_callibration[i] = []
+            self.offset_callibration[i].append({'orientations': np.clip(np.random.normal(0, 0.05, obs['orientations'][i].size),-0.8,0.8)})
+            self.offset_callibration[i].append({'height': np.random.normal(0, 0.05, obs['height'][i].size)})
+            self.offset_callibration[i].append({'velocity': np.random.normal(0, 0.5, obs['velocity'][i].size)})
+
+      obs['orientations'][i]= np.clip(obs['orientations'][i]+(self.offset_callibration[i][0]['orientations'] + np.random.normal(0, 0.01, obs['orientations'][i].size)),-1,1)
+      obs['height'][i] += (self.offset_callibration[i][1]['height'] + np.random.normal(0, 0.01, obs['height'][i].size))
+      obs['velocity'][i] += (self.offset_callibration[i][2]['velocity'] + np.random.normal(0, 0.01, obs['velocity'][i].size))
+
+
     acts, outs, self.carry = policy(obs, self.carry, **self.kwargs)
     assert all(k not in acts for k in outs), (
         list(outs.keys()), list(acts.keys()))
