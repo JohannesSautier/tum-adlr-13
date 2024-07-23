@@ -67,10 +67,6 @@ class Driver:
     assert all(len(x) == self.length for x in obs.values()), obs
 
     #Check 
-
-
-
-
     if len(self.offset_callibration) == 0:
       self.offset_callibration = [[] for _ in range(len(acts))]
 

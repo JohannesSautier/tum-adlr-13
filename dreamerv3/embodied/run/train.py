@@ -140,10 +140,12 @@ def train(make_agent, make_replay, make_env, make_logger, args):
 
   #Convert entropy array 
   entropy_values_converted = [float(value.item()) for value in entropy_values]
+  #Store the entropy array in a file at plots
+  np.save('entropy_values_DR_3.npy', entropy_values_converted)
   #Plot the result 
   plt.plot(entropy_values_converted)
   plt.title('Entropy over Time')
   plt.xlabel('Step')
   plt.ylabel('Entropy')
-  plt.savefig('logdir_debug/graphs/entropy_over_time.png')
+  plt.savefig('trash/plots/entropy_over_time_DR_3.png')
   logger.close()
