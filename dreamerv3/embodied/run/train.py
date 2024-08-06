@@ -1,12 +1,12 @@
 import re
 from collections import defaultdict
 from functools import partial as bind
-
 import embodied
 import numpy as np
 
 #Make the nececarry imports for plotting + global storage varibale to store the results of the latent 
 import matplotlib.pyplot as plt
+from datetime import datetime
 entropy_values = []
 counter = 0
 
@@ -141,11 +141,15 @@ def train(make_agent, make_replay, make_env, make_logger, args):
   #Convert entropy array 
   entropy_values_converted = [float(value.item()) for value in entropy_values]
   #Store the entropy array in a file at plots
-  np.save('entropy_values_DR_3.npy', entropy_values_converted)
+  # Generate a timestamp
+  timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+  # Save the entropy values with a timestamp
+  np.save(f'Entropy_values/entropy_values_DR_{timestamp}.npy', entropy_values_converted)
   #Plot the result 
   plt.plot(entropy_values_converted)
   plt.title('Entropy over Time')
   plt.xlabel('Step')
   plt.ylabel('Entropy')
-  plt.savefig('trash/plots/entropy_over_time_DR_3.png')
+  plt.savefig('Entropy_values/entropy_over_time_DR_3.png')
   logger.close()
