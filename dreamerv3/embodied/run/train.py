@@ -4,17 +4,17 @@ from functools import partial as bind
 import embodied
 import numpy as np
 
-#Make the nececarry imports for plotting + global storage varibale to store the results of the latent 
+#Nececarry imports for plotting + global storage varibale to store the results of the latent 
 import matplotlib.pyplot as plt
 from datetime import datetime
 entropy_values = []
 counter = 0
 
 def callback(entropy):
-  # This logs the entropy of the latent that is used for imagining the next state to create trajectories for the agent to learn on 
+  #This logs the entropy of the categorical distribution of the dynamics predictor used to predict the latent state and for imaginery rollouts.
   global counter 
   counter +=1
-  if (counter%1000)==0: 
+  if (counter%2000)==0: 
     entropy_values.append(entropy)
     print (entropy)
 
@@ -138,20 +138,11 @@ def train(make_agent, make_replay, make_env, make_logger, args):
     if should_save(step):
       checkpoint.save()
       entropy_values_converted = [float(value.item()) for value in entropy_values]
-      np.save('entropy_values_DR_3.npy', entropy_values_converted)
+      #Save intermediate results
+      np.save('logdir_report_entropy/entropy_values_backup.npy', entropy_values_converted)
 
-  #Convert entropy array 
+  #Save final result 
   entropy_values_converted = [float(value.item()) for value in entropy_values]
-  #Store the entropy array in a file at plots
-  # Generate a timestamp
   timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-
-  # Save the entropy values with a timestamp
-  np.save(f'Entropy_values/entropy_values_DR_{timestamp}.npy', entropy_values_converted)
-  #Plot the result 
-  plt.plot(entropy_values_converted)
-  plt.title('Entropy over Time')
-  plt.xlabel('Step')
-  plt.ylabel('Entropy')
-  plt.savefig('Entropy_values/entropy_over_time_DR_3.png')
+  np.save(f'logdir_report_entropy/entropy_values_DR_{timestamp}.npy', entropy_values_converted)
   logger.close()

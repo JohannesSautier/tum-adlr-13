@@ -89,11 +89,9 @@ class RSSM(nj.Module):
     deter, feat = self._gru(carry['deter'], carry['stoch'], action)
     logit = self._prior(feat)
 
-    #Callculate the softmax for each row 
-    intermediate = jax.nn.softmax(logit, axis=-1)
-    #Summ up the result
-    average_entropy = jnp.mean(-jnp.sum(intermediate * jnp.log(intermediate), axis=-1))
-    #Print the result with the function callback, that is defined in the package embodied.run and there in the train.py file which contains the train() function which contrains the callback function()
+    #Callculate the average entropy of all starting states of the batch 
+    average_entropy = jnp.mean(-jnp.sum(jax.nn.softmax(logit, axis=-1) * jnp.log(jax.nn.softmax(logit, axis=-1)), axis=-1))
+    #Give back the result with the function callback, that is defined in the package embodied.run.train file which contrains the callback function()
     jax.debug.callback(callback, average_entropy)
 
     stoch = cast(self._dist(logit).sample(seed=nj.seed()))

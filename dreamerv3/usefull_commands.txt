@@ -33,11 +33,9 @@ sudo apt-get install ffmpeg git vim curl software-properties-common
 sudo apt-get install libglew-dev x11-xserver-utils xvfb
 sudo apt-get clean
 
-
 # ---------------------- Get environment installations: ---------------------- #
 pip install dm_control
 pip install crafter
-
 
 # ---------------- Get installations from the Readme and Jax: ---------------- #
 pip install -U -r tum-adlr-13/dreamerv3/embodied/requirements.txt
@@ -45,12 +43,11 @@ pip install -U -r tum-adlr-13/dreamerv3/dreamerv3/requirements.txt \
   -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 
 -> Incase there appears a Tensorflow waring try to install pip install ml-dtypes==0.3.1 and then the requirments.txt files again
--> Does not really work beacause then Jax is not uptodate
+-> Does not really work, because then Jax is not up to date.
 
 # -------------------------- set up git credentials -------------------------- #
 git config --global user.name "Your Name"
 git config --global user.email "youremail@example.com"
-
 
 # ---------------------------------------------------------------------------- #
 #                               Run in debug mode                              #
@@ -61,37 +58,32 @@ Run debug mode:
 Evaluate this model: 
     python dreamerv3/dreamerv3/main.py --logdir ~/logdir_debug/{timestamp} --configs dmc_proprio debug --batch_size 1 --run.from_checkpoint ~/logdir_debug/20240703T093224/checkpoint.ckpt --run.script eval_only --run.steps 200
 
-Launch the tensorboard: 
-    tensorboard --logdir logir_new_model/20240619T134632
-
 
 # ---------------------------------------------------------------------------- #
 #                       Run a walker walk training script                      #
 # ---------------------------------------------------------------------------- #
 
 To do before run: 
- - Change storage position entropy data dict storage 
- - Sensor noise in driver can stay for both training and evalutation 
- - Friction sampeling in from_dm can stay 
- - Store frames in dmc.py if wanted. -> --run.num_envs 1 --run.num_envs_eval 1 -> pic corerct storage position if wanted -> use make_video to save the frames 
- - Include altered phisical parameters if wanted in XML file if wanted 
+ - Rename the logdir storage position and run type in run_main.sh 
+ - Use 500.000 environment interactions instead of 300.000
+ - Change storage position for the entropy data 
+ - If used in DR mode switch on sensor noise in driver.py for training and evalutation
+ - If used in DR mode switch on friction sampeling in from_dm.py 
+ - Store frames if wanted and in eval mode. Switch on trakcing in dmc.py-> Use correct additional arguments: --run.num_envs 1 --run.num_envs_eval 1 -> Pick corerct storage position if wanted -> Use make_video.py to make a video 
+ - If used in shape noise mode, include altered phisical parameters in walker.XML file 
 
 To do after the run: 
 - Rename logdir run file to unique name 
 - Rename the entropy data file correctly 
-- includ the new jason file to the create_plots notebook to update the plots 
-- make the vieo if wanted 
-- Change back physical properties if wanted
-
+- Includ the new jason file to the create_plots notebook to update the plots 
+- Make the vieo if wanted 
+- Change wlaker.xml file back to original state
 
 Run this model: 
-    python tum-adlr-13/dreamerv3/dreamerv3/main.py --logdir ~/logdir/{timestamp} --configs dmc_proprio --run.script train --seed 3 --run.from_checkpoint ~/logdir/20240725T000716/checkpoint.ckp
+    python tum-adlr-13/dreamerv3/dreamerv3/main.py --logdir ~/logdir/{timestamp} --configs dmc_proprio --run.script train --seed 3 --run.steps 5e5
 
 Evaluate this model: 
-    python tum-adlr-13/dreamerv3/dreamerv3/main.py --logdir ~/logdir/{timestamp} --configs dmc_proprio --run.script eval_only --run.from_checkpoint ~/logdir/Run_DR_3_first_half/checkpoint.ckpt --run.num_envs 1 --run.num_envs_eval 1 --run.steps 1000
-
-Evaluate this model completly: 
-    python tum-adlr-13/dreamerv3/dreamerv3/main.py --logdir ~/logdir/{timestamp} --configs dmc_proprio --run.script eval_only --run.from_checkpoint ~/logdir/Run_DR_4/checkpoint.ckpt
+    python tum-adlr-13/dreamerv3/dreamerv3/main.py --logdir ~/logdir/{timestamp} --configs dmc_proprio --run.script eval_only --run.from_checkpoint ~/logdir/Run_DR_3_first_half/checkpoint.ckpt 
 
 Load the tensorboard event file: 
     tensorboard --logdir logdir --port=6010
@@ -99,4 +91,3 @@ Load the tensorboard event file:
 Run the video maker: 
     python tum-adlr-13/dreamerv3/make_video.py
 
-    logdir/20240725T000716/checkpoint.ckpt
